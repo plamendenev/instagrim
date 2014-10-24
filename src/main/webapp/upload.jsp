@@ -4,6 +4,8 @@
     Author     : Administrator
 --%>
 
+<%@page import="uk.ac.dundee.computing.aec.instagrim.models.User"%>
+<%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,30 +14,27 @@
         <title>Instagrim</title>
         <link rel="stylesheet" type="text/css" href="Styles.css" />
     </head>
-    <body>
-        <h1>InstaGrim ! </h1>
-        <h2>Your world in Black and White</h2>
-        <nav>
-            <ul>
-                <li class="nav"><a href="upload.jsp">Upload</a></li>
-                <li class="nav"><a href="/Instagrim/Images/majed">Sample Images</a></li>
-            </ul>
-        </nav>
- 
-        <article>
-            <h3>File Upload</h3>
-            <form method="POST" enctype="multipart/form-data" action="Image">
-                File to upload: <input type="file" name="upfile"><br/>
 
-                <br/>
-                <input type="submit" value="Press"> to upload the file!
-            </form>
+    <h1>InstaGrim ! </h1>
+    <h2>Your world in Black and White</h2>
+    <%
+        LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
+        if (lg.getlogedin()) {
+    %>
+    <ul>
+        <li><a href="/Instagrim">Home</a></li>
+        <li><a href="profile.jsp">Profile</a></li>
+        <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
+    </ul>
+    <%}%>
 
-        </article>
-        <footer>
-            <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
-            </ul>
-        </footer>
-    </body>
+    <article>
+        <h3>File Upload</h3>
+        <form method="POST" enctype="multipart/form-data" action="Image">
+            File to upload: <input type="file" name="upfile"><br/>
+
+            <br/>
+            <input type="submit" value="Upload">
+        </form>
+    </article>        
 </html>

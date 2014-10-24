@@ -7,8 +7,6 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 
+
+
 /**
  *
  * @author Administrator
  */
 @WebServlet(name = "Register", urlPatterns = {"/Register"})
+
 public class Register extends HttpServlet {
 
     Cluster cluster = null;
@@ -43,23 +44,24 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
 
-        if (password.equals(passwordConfirm)) {
-            User us = new User();
+        if (password.equals(passwordConfirm) && !username.equals(null)
+                && !password.equals(null) && !passwordConfirm.equals(null)
+                && (!name.equals(null)) && (!surname.equals(null))) {
+            User us = new User();            
             us.setCluster(cluster);
-            us.RegisterUser(username, password);
-
-            response.sendRedirect("/Instagrim");
-        }
-        else
-        {
+            us.RegisterUser(name, surname, username, password);            
+             
+            response.sendRedirect("login.jsp");
             
+        } else {
+            response.sendRedirect("registerError.jsp");
         }
-        }
-
     }
 
     /**

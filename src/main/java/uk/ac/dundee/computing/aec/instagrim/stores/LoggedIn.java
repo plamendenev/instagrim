@@ -3,37 +3,44 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package uk.ac.dundee.computing.aec.instagrim.stores;
+
+import uk.ac.dundee.computing.aec.instagrim.models.User;
 
 /**
  *
  * @author Administrator
  */
 public class LoggedIn {
-    boolean logedin=false;
-    String Username=null;
-    public void LogedIn(){
-        
+
+    private boolean logedin = false;
+    private User user = null;
+
+    public void LogedIn() {
+
     }
-    
-    public void setUsername(String name){
-        this.Username=name;
+
+    public void setUser(User user) {
+        this.user = user;
     }
-    public String getUsername(){
-        return Username;
+
+    public User getUser() {
+        return user;
     }
-    public void setLogedin(){
-        logedin=true;
+
+    public void setLogedin() {
+        logedin = true;
     }
-    public void setLogedout(){
-        logedin=false;
+
+    public void setLogedout() {
+        logedin = false;
     }
-    
-    public void setLoginState(boolean logedin){
-        this.logedin=logedin;
+
+    public void setLoginState(boolean logedin) {
+        this.logedin = logedin;
     }
-    public boolean getlogedin(){
+
+    public boolean getlogedin() {
         return logedin;
     }
 }
