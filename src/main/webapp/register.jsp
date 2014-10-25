@@ -21,8 +21,14 @@
             <h3>Register as user</h3>
             <form method="POST"  action="Register">
                 <ul>
+                    <%
+                        if (request.getAttribute("registerErrorMessage") != null) {
+                    %>
+                    <font color ="red"><%out.println(request.getAttribute("registerErrorMessage"));%></font> 
+                    <%}%>
                     <li>First name <input type="text" name="name"></li>
                     <li>Surname <input type="text" name="surname"></li>
+                    <li>Email <input type="email" name="email"></li>
                     <li>User Name <input type="text" name="username"></li>                    
                     <li>Password <input type="password" name="password"></li>
                     <li>Repeat password <input type="password" name="passwordConfirm"></li>                    

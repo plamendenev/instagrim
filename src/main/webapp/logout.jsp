@@ -14,8 +14,7 @@
     <body>
         <%if (session != null) {
                 session.invalidate();
-            }%>
-        <h1>You have logged out.</h1>
-        <h2><a href="/Instagrim">Home</a></h2>
+                response.sendRedirect("/Instagrim");
+            }%>        
     </body>
 </html>

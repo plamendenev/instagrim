@@ -7,6 +7,9 @@ package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,21 +49,29 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
+        String email = request.getParameter("email");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
+       
+        Set<String> emailSet = new LinkedHashSet<String>();
+        emailSet.add(email);
 
-        if (password.equals(passwordConfirm) && !username.equals(null)
-                && !password.equals(null) && !passwordConfirm.equals(null)
-                && (!name.equals(null)) && (!surname.equals(null))) {
+        if (!name.isEmpty() && !surname.isEmpty() && !username.isEmpty() 
+                && !email.isEmpty() && !password.isEmpty()
+                && !passwordConfirm.isEmpty() && password.equals(passwordConfirm)) {
             User us = new User();            
             us.setCluster(cluster);
-            us.RegisterUser(name, surname, username, password);            
+            us.RegisterUser(name, surname, emailSet, username, password);            
              
             response.sendRedirect("login.jsp");
             
         } else {
-            response.sendRedirect("registerError.jsp");
+            
+            request.setAttribute("registerErrorMessage", "Something is missing or passwords not matching");
+            RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+            rd.forward(request, response);
+            //response.sendRedirect("registerError.jsp");
         }
     }
 

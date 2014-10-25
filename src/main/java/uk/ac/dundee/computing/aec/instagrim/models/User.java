@@ -27,16 +27,11 @@ public class User {
     Cluster cluster;
     private String username, name, surname;
     private Set<String> email;
-    //private Pic profilePic;
     private UUID profilePic;
     private User user;
 
     public User() {
-        name = null;
-        surname = null;
-        username = null;
-        email = null;
-        profilePic = null;
+       
     }
 
     public UUID getProfilePic() {
@@ -79,7 +74,7 @@ public class User {
         return username;
     }
 
-    public boolean RegisterUser(String name, String surname, String username, String Password) {
+    public boolean RegisterUser(String name, String surname, Set<String> email, String username, String Password) {
         AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
         String EncodedPassword = null;
         try {
@@ -89,10 +84,10 @@ public class User {
             return false;
         }
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("insert into userprofiles (login, password, first_name, last_name) Values(?,?,?,?)");
+        PreparedStatement ps = session.prepare("insert into userprofiles (first_name, last_name, email, login, password) Values(?,?,?,?,?)");
 
         BoundStatement boundStatement = new BoundStatement(ps);
-        session.execute(boundStatement.bind(username, EncodedPassword, name, surname));
+        session.execute(boundStatement.bind(name, surname, email, username, EncodedPassword));
         //We are assuming this always works.  Also a transaction would be good here !        
         return true;
     }
@@ -121,8 +116,9 @@ public class User {
                 String StoredPass = row.getString("password");
                 if (StoredPass.compareTo(EncodedPassword) == 0) {
                     LoggedIn lg = new LoggedIn();
-                    lg.setLogedin();
-                    user = getUserDb(username);
+                    lg.setLogedin();        
+                    user = new User();
+                    user = getUserFromDb(username);
                     lg.setUser(user);
 
                     return lg;
@@ -133,18 +129,19 @@ public class User {
         return null;
     }
 
-    public User getUserDb(String username) {
+    public User getUserFromDb(String username) {
         Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("select first_name, last_name, login from userprofiles where login =?");
+        PreparedStatement ps = session.prepare("select first_name, last_name, email, login from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         boundStatement.bind(username);
         rs = session.execute(boundStatement);
         Row aRow = rs.one();
-        user = new User();
         user.setUsername(aRow.getString("login"));
         user.setName(aRow.getString("first_name"));
         user.setSurname(aRow.getString("last_name"));
+        user.setEmail(aRow.getSet("email", String.class));
+        //user.setProfilePic(aRow.getUUID("profilepic"));
 
         return user;
     }

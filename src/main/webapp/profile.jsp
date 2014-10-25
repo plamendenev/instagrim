@@ -24,9 +24,11 @@
             <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
         </ul>
         <h2>Your profile</h2>
+        <img src="/Instagrim/Thumb/<%lg.getUser().getProfilePic();%>">
         <h3>First name: <%=lg.getUser().getName()%></h3>
         <h3>Surname: <%=lg.getUser().getSurname()%></h3>
         <h3>Username: <%=lg.getUser().getUsername()%></h3>
+        <h3>Email: <%=lg.getUser().getEmail()%></h3>
 
         <%} else
                 response.sendRedirect("/Instagrim/login.jsp");
