@@ -29,7 +29,9 @@
         </ul>
         <article>
             <h1>Your Pics</h1>
+            
             <%
+                LoggedIn lg = (LoggedIn) session.getAttribute("LoggedIn");
                 java.util.LinkedList<Pic> lsPics = (java.util.LinkedList<Pic>) request.getAttribute("Pics");
                 if (lsPics == null) {
             %>
@@ -44,8 +46,9 @@
             %>
             <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a>
 
-            <form method="POST"  action="Instagrim/Profile">  
-                <input type="text" name="picid" value="<%=p.getSUUID()%>" >                 
+            <form method="POST"  action="/Instagrim/Profile">  
+                <input type="text" name="picid" value="<%=p.getSUUID()%>" hidden>
+                <input type="text" name="user" value="<%=lg.getUser().getUsername()%>" hidden>
                 <input type="submit" value="Make profile pic">
             </form>
             <%

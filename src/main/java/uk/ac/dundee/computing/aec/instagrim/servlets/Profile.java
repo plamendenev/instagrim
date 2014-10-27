@@ -85,11 +85,12 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //UUID picid = request.getParameter("picid");
+        String user = request.getParameter("user");
+        String picid = request.getParameter("picid");
+        UUID picUUID = UUID.fromString(picid);
         User us = new User();
         us.setCluster(cluster);
-        //us.setProfilePic(picid);
+        us.setProfilePic(picUUID, user);
         response.sendRedirect("/Instagrim/profile.jsp");
     }
 

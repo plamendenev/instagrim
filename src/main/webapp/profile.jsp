@@ -24,7 +24,7 @@
             <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
         </ul>
         <h2>Your profile</h2>
-        <img src="/Instagrim/Thumb/<%%>">
+        <img src="/Instagrim/Thumb/<%=lg.getUser().getProfilePic()%>">
 
         <%
             if (request.getAttribute("updateSuccess") != null) {

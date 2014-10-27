@@ -38,15 +38,14 @@ public class User {
         return profilePic;
     }
 
-    public void setProfilePic(UUID profilePic) {
+    public void setProfilePic(UUID profilePic, String User) {
         this.profilePic = profilePic;
         
-        LoggedIn lg = new LoggedIn();
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrimPdd");
 
         PreparedStatement ps = session.prepare("UPDATE userprofiles SET profilepic=? WHERE login =?");
         BoundStatement boundStatement = new BoundStatement(ps);
-        boundStatement.bind(profilePic, lg.getUser().getUsername());
+        boundStatement.bind(profilePic, User);
         session.execute(boundStatement);
     }
 
@@ -91,7 +90,7 @@ public class User {
             System.out.println("Can't check your password");
             return false;
         }
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrimPdd");
         PreparedStatement ps = session.prepare("insert into userprofiles (first_name, last_name, email, login, password) Values(?,?,?,?,?)");
 
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -110,7 +109,7 @@ public class User {
             System.out.println("Can't check your password");
             return false;
         }
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrimPdd");
         PreparedStatement ps = session.prepare("UPDATE userprofiles SET first_name=?, last_name=?, email=?, password=? WHERE login=?");
 
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -129,7 +128,7 @@ public class User {
             System.out.println("Can't check your password");
             return null;
         }
-        Session session = cluster.connect("instagrim");
+        Session session = cluster.connect("instagrimPdd");
         PreparedStatement ps = session.prepare("select password from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
@@ -158,8 +157,8 @@ public class User {
     }
 
     public User getUserFromDb(String username) {
-        Session session = cluster.connect("instagrim");
-        PreparedStatement ps = session.prepare("select first_name, last_name, email, login from userprofiles where login =?");
+        Session session = cluster.connect("instagrimPdd");
+        PreparedStatement ps = session.prepare("select first_name, last_name, email, login, profilepic from userprofiles where login =?");
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         boundStatement.bind(username);
@@ -169,7 +168,7 @@ public class User {
         user.setName(aRow.getString("first_name"));
         user.setSurname(aRow.getString("last_name"));
         user.setEmail(aRow.getSet("email", String.class));
-        //user.setProfilePic(aRow.getUUID("profilepic"));
+        user.profilePic = aRow.getUUID("profilepic");
 
         return user;
     }
