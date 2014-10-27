@@ -4,6 +4,8 @@
     Author     : Administrator
 --%>
 
+<%@page import="uk.ac.dundee.computing.aec.instagrim.models.User"%>
+<%@page import="uk.ac.dundee.computing.aec.instagrim.servlets.Profile"%>
 <%@page import="java.util.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="uk.ac.dundee.computing.aec.instagrim.stores.*" %>
@@ -41,11 +43,15 @@
 
             %>
             <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a>
-            <button class="profilePic">Make profile picture</button>
+
+            <form method="POST"  action="Profile">  
+                <input type="text" name="picid" value="<%=p.getSUUID()%>" >                 
+                <input type="submit" value="Make profile pic">
+            </form>
             <%
                     }
                 }
-                %>            
+            %>            
         </article>        
     </body>
 </html>

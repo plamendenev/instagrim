@@ -40,6 +40,14 @@ public class User {
 
     public void setProfilePic(UUID profilePic) {
         this.profilePic = profilePic;
+        
+        LoggedIn lg = new LoggedIn();
+        Session session = cluster.connect("instagrim");
+
+        PreparedStatement ps = session.prepare("UPDATE userprofiles SET profilepic=? WHERE login =?");
+        BoundStatement boundStatement = new BoundStatement(ps);
+        boundStatement.bind(profilePic, lg.getUser().getUsername());
+        session.execute(boundStatement);
     }
 
     public Set<String> getEmail() {
@@ -106,8 +114,8 @@ public class User {
         ResultSet rs = null;
         BoundStatement boundStatement = new BoundStatement(ps);
         boundStatement.bind(username);
-
         rs = session.execute(boundStatement);
+        
         if (rs.isExhausted()) {
             System.out.println("No Images returned");
             return null;

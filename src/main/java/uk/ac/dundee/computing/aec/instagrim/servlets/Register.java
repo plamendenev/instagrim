@@ -71,7 +71,6 @@ public class Register extends HttpServlet {
             request.setAttribute("registerErrorMessage", "Something is missing or passwords not matching");
             RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
             rd.forward(request, response);
-            //response.sendRedirect("registerError.jsp");
         }
     }
 

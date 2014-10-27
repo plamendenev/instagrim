@@ -24,7 +24,7 @@
             <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
         </ul>
         <h2>Your profile</h2>
-        <img src="/Instagrim/Thumb/<%lg.getUser().getProfilePic();%>">
+        <img src="/Instagrim/Thumb/<%%>">
         <h3>First name: <%=lg.getUser().getName()%></h3>
         <h3>Surname: <%=lg.getUser().getSurname()%></h3>
         <h3>Username: <%=lg.getUser().getUsername()%></h3>
