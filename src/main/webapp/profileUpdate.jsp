@@ -1,7 +1,7 @@
 <%-- 
-    Document   : register.jsp
-    Created on : Sep 28, 2014, 6:29:51 PM
-    Author     : Administrator
+    Document   : profileUpdate
+    Created on : 27-Oct-2014, 12:04:08
+    Author     : plamendenev
 --%>
 
 <%@page import="uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn"%>
@@ -19,22 +19,26 @@
             <h2>Your world in Black and White</h2>
         </header>
         <article>
-            <h3>Register as user</h3>
-            <form method="POST" action="Register">            
-                <ul>                   
+            <h3>Update your details</h3>
+            <form method="POST" action="ProfileUpdate">            
+                <ul>
                     <%
-                        if (request.getAttribute("registerErrorMessage") != null) {
+                        if (request.getAttribute("updateSuccess") != null) {
                     %>
-                    <font color ="red"><%out.println(request.getAttribute("registerErrorMessage"));%></font> 
+                    <font color ="green"><%out.println(request.getAttribute("updateSuccess"));%></font> 
+                    <%}%>
+                    <%
+                        if (request.getAttribute("updateErrorMessage") != null) {
+                    %>
+                    <font color ="red"><%out.println(request.getAttribute("updateErrorMessage"));%></font> 
                     <%}%>
                     <li>First name <input type="text" name="name"></li>
                     <li>Surname <input type="text" name="surname"></li>
-                    <li>Email <input type="email" name="email"></li>
-                    <li>User Name <input type="text" name="username"></li>                    
+                    <li>Email <input type="email" name="email"></li>                   
                     <li>Password <input type="password" name="password"></li>
                     <li>Repeat password <input type="password" name="passwordConfirm"></li>                    
                 </ul>
-                <input type="submit" value="Submit"> 
+                <input type="submit" value="Update"> 
             </form>
 
         </article>

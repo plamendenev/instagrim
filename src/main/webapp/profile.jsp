@@ -25,10 +25,19 @@
         </ul>
         <h2>Your profile</h2>
         <img src="/Instagrim/Thumb/<%%>">
+
+        <%
+            if (request.getAttribute("updateSuccess") != null) {
+        %>
+        <font color ="green"><%out.println(request.getAttribute("updateSuccess"));%></font> 
+        <%}%>
+
         <h3>First name: <%=lg.getUser().getName()%></h3>
         <h3>Surname: <%=lg.getUser().getSurname()%></h3>
         <h3>Username: <%=lg.getUser().getUsername()%></h3>
-        <h3>Email: <%=lg.getUser().getEmail()%></h3>
+        <h3>Email: <%=lg.getUser().getEmail()%></h3>        
+
+        <a href="profileUpdate.jsp">Update</a>   
 
         <%} else
                 response.sendRedirect("/Instagrim/login.jsp");

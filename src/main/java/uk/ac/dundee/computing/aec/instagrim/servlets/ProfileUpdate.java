@@ -3,36 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package uk.ac.dundee.computing.aec.instagrim.servlets;
 
 import com.datastax.driver.core.Cluster;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.UUID;
-import javax.servlet.ServletConfig;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
 
 /**
  *
- * @author Plamen
+ * @author plamendenev
  */
-@WebServlet(name = "Profile", urlPatterns = {"/Profile"})
-
-public class Profile extends HttpServlet {
+@WebServlet(name = "ProfileUpdate", urlPatterns = {"/ProfileUpdate"})
+public class ProfileUpdate extends HttpServlet {
 
     Cluster cluster = null;
-
-    public void init(ServletConfig config) throws ServletException {
-        // TODO Auto-generated method stub
-        cluster = CassandraHosts.getCluster();
-    }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,10 +45,10 @@ public class Profile extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Profile</title>");
+            out.println("<title>Servlet ProfileUpdate</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Profile at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileUpdate at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -85,12 +80,30 @@ public class Profile extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String passwordConfirm = request.getParameter("passwordConfirm");
+       
+        Set<String> emailSet = new LinkedHashSet<String>();
+        emailSet.add(email);
 
-        //UUID picid = request.getParameter("picid");
-        User us = new User();
-        us.setCluster(cluster);
-        //us.setProfilePic(picid);
-        response.sendRedirect("/Instagrim/profile.jsp");
+        if (!name.isEmpty() && !surname.isEmpty() 
+                && !email.isEmpty() && !password.isEmpty()
+                && !passwordConfirm.isEmpty() && password.equals(passwordConfirm)) {
+            User us = new User();            
+            us.setCluster(cluster);
+            us.UpdateUser(name, surname, emailSet, password);            
+            request.setAttribute("updateSuccess", "Update successful!");
+            response.sendRedirect("profile.jsp");
+            
+        } else {
+            
+            request.setAttribute("updateErrorMessage", "Something is missing or passwords not matching");
+            RequestDispatcher rd = request.getRequestDispatcher("profileUpdate.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /**

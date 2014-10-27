@@ -99,6 +99,26 @@ public class User {
         //We are assuming this always works.  Also a transaction would be good here !        
         return true;
     }
+    
+    public boolean UpdateUser(String name, String surname, Set<String> email, String Password) {
+        AeSimpleSHA1 sha1handler = new AeSimpleSHA1();
+        LoggedIn lg = new LoggedIn();
+        String EncodedPassword = null;
+        try {
+            EncodedPassword = sha1handler.SHA1(Password);
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException et) {
+            System.out.println("Can't check your password");
+            return false;
+        }
+        Session session = cluster.connect("instagrim");
+        PreparedStatement ps = session.prepare("UPDATE userprofiles SET first_name=?, last_name=?, email=?, password=? WHERE login=?");
+
+        BoundStatement boundStatement = new BoundStatement(ps);
+        String username = lg.getUser().getUsername();
+        session.execute(boundStatement.bind(name, surname, email, EncodedPassword, username));
+        //We are assuming this always works.  Also a transaction would be good here !        
+        return true;
+    }
 
     public LoggedIn IsValidUser(String username, String Password) {
         AeSimpleSHA1 sha1handler = new AeSimpleSHA1();

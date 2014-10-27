@@ -44,7 +44,7 @@
             %>
             <a href="/Instagrim/Image/<%=p.getSUUID()%>" ><img src="/Instagrim/Thumb/<%=p.getSUUID()%>"></a>
 
-            <form method="POST"  action="Profile">  
+            <form method="POST"  action="Instagrim/Profile">  
                 <input type="text" name="picid" value="<%=p.getSUUID()%>" >                 
                 <input type="submit" value="Make profile pic">
             </form>
