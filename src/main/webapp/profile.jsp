@@ -37,7 +37,7 @@
         <h3>Username: <%=lg.getUser().getUsername()%></h3>
         <h3>Email: <%=lg.getUser().getEmail()%></h3>        
 
-        <a href="profileUpdate.jsp">Update</a>   
+        <a href="profileUpdate.jsp">Update details</a>   
 
         <%} else
                 response.sendRedirect("/Instagrim/login.jsp");

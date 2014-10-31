@@ -17,7 +17,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import uk.ac.dundee.computing.aec.instagrim.lib.CassandraHosts;
 import uk.ac.dundee.computing.aec.instagrim.models.User;
+import uk.ac.dundee.computing.aec.instagrim.stores.LoggedIn;
 
 /**
  *
@@ -85,6 +88,9 @@ public class ProfileUpdate extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String passwordConfirm = request.getParameter("passwordConfirm");
+        
+        HttpSession session=request.getSession();
+        LoggedIn lg= (LoggedIn)session.getAttribute("LoggedIn");
        
         Set<String> emailSet = new LinkedHashSet<String>();
         emailSet.add(email);
@@ -92,11 +98,16 @@ public class ProfileUpdate extends HttpServlet {
         if (!name.isEmpty() && !surname.isEmpty() 
                 && !email.isEmpty() && !password.isEmpty()
                 && !passwordConfirm.isEmpty() && password.equals(passwordConfirm)) {
-            User us = new User();            
-            us.setCluster(cluster);
-            us.UpdateUser(name, surname, emailSet, password);            
+            User us = new User();     
+            
+            lg.getUser().setName(name);
+            lg.getUser().setSurname(surname);
+            lg.getUser().setEmail(emailSet);
+            
+            us.setCluster(CassandraHosts.getCluster());
+            us.UpdateUser(name, surname, emailSet, password, lg.getUser().getUsername());            
             request.setAttribute("updateSuccess", "Update successful!");
-            response.sendRedirect("profile.jsp");
+            response.sendRedirect("/Instagrim/profile.jsp");
             
         } else {
             
