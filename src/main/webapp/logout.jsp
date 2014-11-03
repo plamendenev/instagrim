@@ -14,7 +14,7 @@
     <body>
         <%if (session != null) {
                 session.invalidate();
-                response.sendRedirect("/Instagrim");
+                response.sendRedirect("/InstagrimPdd/index.jsp");
             }%>        
     </body>
 </html>

@@ -62,7 +62,7 @@ public class Login extends HttpServlet {
                 session.setAttribute("LoggedIn", isValid);
                 //RequestDispatcher rd = request.getRequestDispatcher("profile.jsp");
                 //rd.forward(request, response);
-                response.sendRedirect("/Instagrim");
+                response.sendRedirect("/InstagrimPdd/index.jsp");
                 return;
             }
         }

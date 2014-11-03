@@ -40,7 +40,7 @@
         </article>
         <footer>
             <ul>
-                <li class="footer"><a href="/Instagrim">Home</a></li>
+                <li class="footer"><a href="/InstagrimPdd/index.jsp">Home</a></li>
             </ul>
         </footer>
     </body>

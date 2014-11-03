@@ -20,11 +20,11 @@
             if (lg.getlogedin()) {
         %>
         <ul>
-            <li><a href="/Instagrim">Home</a></li>    
-            <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
+            <li><a href="/InstagrimPdd">Home</a></li>    
+            <li><a href="/InstagrimPdd/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
         </ul>
         <h2>Your profile</h2>
-        <img src="/Instagrim/Thumb/<%=lg.getUser().getProfilePic()%>">
+        <img src="/InstagrimPdd/Thumb/<%=lg.getUser().getProfilePic()%>">
 
         <%
             if (request.getAttribute("updateSuccess") != null) {
@@ -37,10 +37,10 @@
         <h3>Username: <%=lg.getUser().getUsername()%></h3>
         <h3>Email: <%=lg.getUser().getEmail()%></h3>        
 
-        <a href="profileUpdate.jsp">Update details</a>   
+        <a href="/InstagrimPdd/profileUpdate.jsp">Update details</a>   
 
         <%} else
-                response.sendRedirect("/Instagrim/login.jsp");
+                response.sendRedirect("/InstagrimPdd/login.jsp");
         %>
 
     </body>

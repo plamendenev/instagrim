@@ -27,7 +27,7 @@
             <h2>Hello, <%=lg.getUser().getName()%>!</h2>
             <li><a href="upload.jsp">Upload</a></li>
             <li><a href="profile.jsp">Profile</a></li>
-            <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
+            <li><a href="/InstagrimPdd/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
             <li><a href="logout.jsp">Logout</a></li>
                 <%}
                 } else {

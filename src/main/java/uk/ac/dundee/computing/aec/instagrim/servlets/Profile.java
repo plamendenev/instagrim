@@ -91,7 +91,7 @@ public class Profile extends HttpServlet {
         User us = new User();
         us.setCluster(cluster);
         us.setProfilePic(picUUID, user);
-        response.sendRedirect("/Instagrim/profile.jsp");
+        response.sendRedirect("/InstagrimPdd/profile.jsp");
     }
 
     /**

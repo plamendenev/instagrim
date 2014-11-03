@@ -107,7 +107,7 @@ public class ProfileUpdate extends HttpServlet {
             us.setCluster(CassandraHosts.getCluster());
             us.UpdateUser(name, surname, emailSet, password, lg.getUser().getUsername());            
             request.setAttribute("updateSuccess", "Update successful!");
-            response.sendRedirect("/Instagrim/profile.jsp");
+            response.sendRedirect("/InstagrimPdd/profile.jsp");
             
         } else {
             

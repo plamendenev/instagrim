@@ -22,9 +22,9 @@
         if (lg.getlogedin()) {
     %>
     <ul>
-        <li><a href="/Instagrim">Home</a></li>
-        <li><a href="profile.jsp">Profile</a></li>
-        <li><a href="/Instagrim/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
+        <li><a href="/InstagrimPdd/index.jsp">Home</a></li>
+        <li><a href="/InstagrimPdd/profile.jsp">Profile</a></li>
+        <li><a href="/InstagrimPdd/Images/<%=lg.getUser().getUsername()%>">Images</a></li>
     </ul>
     <%}%>
 
